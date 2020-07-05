@@ -26,6 +26,7 @@
 			<properties>
 				<spring-javaformat.version>0.0.22</spring-javaformat.version>
 				<nohttp-checkstyle.version>0.0.4.RELEASE</nohttp-checkstyle.version>
+				<disable.checks>true</disable.checks>
 			</properties>
 			<build>
 				<plugins>
@@ -150,71 +151,71 @@
 			</pluginRepositories>
 		</profile>
 	</profiles>
-	<repositories>
-		<!-- Repositories to allow snapshot and milestone BOM imports during development.
-			This section is stripped by the flatten plugin during install/deploy. -->
-		<repository>
-			<id>central</id>
-			<url>https://repo.maven.apache.org/maven2</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>spring-milestone</id>
-			<name>Spring Milestone</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>spring-snapshot</id>
-			<name>Spring Snapshot</name>
-			<url>https://repo.spring.io/snapshot</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>rabbit-milestone</id>
-			<name>Rabbit Milestone</name>
-			<url>https://dl.bintray.com/rabbitmq/maven-milestones</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>central</id>
-			<url>https://repo.maven.apache.org/maven2</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-		<pluginRepository>
-			<id>spring-release</id>
-			<name>Spring Release</name>
-			<url>https://repo.spring.io/release</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>spring-milestone</id>
-			<name>Spring Milestone</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-		<pluginRepository>
-			<id>spring-snapshot</id>
-			<name>Spring Snapshot</name>
-			<url>https://repo.spring.io/snapshot</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
+	<!--<repositories>-->
+		<!--&lt;!&ndash; Repositories to allow snapshot and milestone BOM imports during development.-->
+			<!--This section is stripped by the flatten plugin during install/deploy. &ndash;&gt;-->
+		<!--<repository>-->
+			<!--<id>central</id>-->
+			<!--<url>https://repo.maven.apache.org/maven2</url>-->
+			<!--<snapshots>-->
+				<!--<enabled>false</enabled>-->
+			<!--</snapshots>-->
+		<!--</repository>-->
+		<!--<repository>-->
+			<!--<id>spring-milestone</id>-->
+			<!--<name>Spring Milestone</name>-->
+			<!--<url>https://repo.spring.io/milestone</url>-->
+			<!--<snapshots>-->
+				<!--<enabled>false</enabled>-->
+			<!--</snapshots>-->
+		<!--</repository>-->
+		<!--<repository>-->
+			<!--<id>spring-snapshot</id>-->
+			<!--<name>Spring Snapshot</name>-->
+			<!--<url>https://repo.spring.io/snapshot</url>-->
+			<!--<snapshots>-->
+				<!--<enabled>true</enabled>-->
+			<!--</snapshots>-->
+		<!--</repository>-->
+		<!--<repository>-->
+			<!--<id>rabbit-milestone</id>-->
+			<!--<name>Rabbit Milestone</name>-->
+			<!--<url>https://dl.bintray.com/rabbitmq/maven-milestones</url>-->
+			<!--<snapshots>-->
+				<!--<enabled>false</enabled>-->
+			<!--</snapshots>-->
+		<!--</repository>-->
+	<!--</repositories>-->
+	<!--<pluginRepositories>-->
+		<!--<pluginRepository>-->
+			<!--<id>central</id>-->
+			<!--<url>https://repo.maven.apache.org/maven2</url>-->
+			<!--<snapshots>-->
+				<!--<enabled>false</enabled>-->
+			<!--</snapshots>-->
+		<!--</pluginRepository>-->
+		<!--<pluginRepository>-->
+			<!--<id>spring-release</id>-->
+			<!--<name>Spring Release</name>-->
+			<!--<url>https://repo.spring.io/release</url>-->
+		<!--</pluginRepository>-->
+		<!--<pluginRepository>-->
+			<!--<id>spring-milestone</id>-->
+			<!--<name>Spring Milestone</name>-->
+			<!--<url>https://repo.spring.io/milestone</url>-->
+			<!--<snapshots>-->
+				<!--<enabled>false</enabled>-->
+			<!--</snapshots>-->
+		<!--</pluginRepository>-->
+		<!--<pluginRepository>-->
+			<!--<id>spring-snapshot</id>-->
+			<!--<name>Spring Snapshot</name>-->
+			<!--<url>https://repo.spring.io/snapshot</url>-->
+			<!--<snapshots>-->
+				<!--<enabled>true</enabled>-->
+			<!--</snapshots>-->
+		<!--</pluginRepository>-->
+	<!--</pluginRepositories>-->
 	<build>
 		<pluginManagement>
 			<plugins>

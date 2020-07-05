@@ -20,11 +20,6 @@
 		<developerConnection>${git.developerConnection}</developerConnection>
 	</scm>
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-gradle-plugin</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
