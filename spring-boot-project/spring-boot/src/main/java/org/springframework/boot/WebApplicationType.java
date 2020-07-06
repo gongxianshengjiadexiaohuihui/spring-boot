@@ -43,6 +43,13 @@ public enum WebApplicationType {
 	 * The application should run as a reactive web application and should start an
 	 * embedded reactive web server.
 	 */
+	/**
+	 * Spring reative Web框架，是5.0中的新功能，是一个完全的reactive并且非阻塞的web框架。它适合处理那种event-loop 风格的事情，也就是事件驱动的。
+	 * 它支持Servlet容器（Tomcat，Jetty，Servlet 3.1+），也支持非Servlet的运行时（比如：Netty，Undertow），因为它的基础不是Servlet API，而是构建在Reactive Streams和Reactor项目之上的。
+	 * 在5中，spring-web-reactive模块被改名为spring-webflux 。新模块中的顶级包是org.springframework.web.reactive。
+	 *
+	 * 为了迎合响应式编程这种概念
+	 */
 	REACTIVE;
 
 	private static final String[] SERVLET_INDICATOR_CLASSES = { "javax.servlet.Servlet",
