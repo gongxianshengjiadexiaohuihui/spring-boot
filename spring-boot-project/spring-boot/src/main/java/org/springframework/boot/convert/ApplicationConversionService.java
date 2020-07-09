@@ -62,6 +62,10 @@ public class ApplicationConversionService extends FormattingConversionService {
 	 * @return the shared {@code ApplicationConversionService} instance (never
 	 * {@code null})
 	 */
+	/**
+	 * 单例模式 DC
+	 * @return
+	 */
 	public static ConversionService getSharedInstance() {
 		ApplicationConversionService sharedInstance = ApplicationConversionService.sharedInstance;
 		if (sharedInstance == null) {

@@ -65,6 +65,9 @@ public class EventPublishingRunListener implements SpringApplicationRunListener,
 		return 0;
 	}
 
+	/**
+	 * 处理应用启动事件，用于应用最早的初始化部分
+	 */
 	@Override
 	public void starting() {
 		this.initialMulticaster.multicastEvent(new ApplicationStartingEvent(this.application, this.args));

@@ -265,8 +265,17 @@ public class SpringApplication {
 		this.resourceLoader = resourceLoader;
 		Assert.notNull(primarySources, "PrimarySources must not be null");
 		this.primarySources = new LinkedHashSet<>(Arrays.asList(primarySources));
+		/**
+		 * 获取当前web应用的类型
+		 */
 		this.webApplicationType = WebApplicationType.deduceFromClasspath();
+		/***
+		 *加载初始化器
+		 */
 		setInitializers((Collection) getSpringFactoriesInstances(ApplicationContextInitializer.class));
+		/**
+		 * 加载应用监听器
+		 */
 		setListeners((Collection) getSpringFactoriesInstances(ApplicationListener.class));
 		this.mainApplicationClass = deduceMainApplicationClass();
 	}
@@ -293,15 +302,30 @@ public class SpringApplication {
 	 * @return a running {@link ApplicationContext}
 	 */
 	public ConfigurableApplicationContext run(String... args) {
+		/**
+		 * 创建一个计时器
+		 */
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		ConfigurableApplicationContext context = null;
 		Collection<SpringBootExceptionReporter> exceptionReporters = new ArrayList<>();
+		/**
+		 * 设置java.awt.headless 属性 一些java图形化工具jconsole需要这个值设为true，
+		 */
 		configureHeadlessProperty();
+		/**
+		 * 加载事件发布监听器EventPublishingRunListener，并把应用监听器绑定到事件监听器上。相当于一个大管家
+		 */
 		SpringApplicationRunListeners listeners = getRunListeners(args);
+		/**
+		 * 发布应用启动事件，并执行监听该事件的监听器的动作
+		 */
 		listeners.starting();
 		try {
 			ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
+			/**
+			 * 准备环境，整理配置资源（解析配置文件就在这一步)。初始化一些常用的工具类，比如Conver
+			 */
 			ConfigurableEnvironment environment = prepareEnvironment(listeners, applicationArguments);
 			configureIgnoreBeanInfo(environment);
 			Banner printedBanner = printBanner(environment);

@@ -28,7 +28,6 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class SampleTomcatApplication {
-
 	private static Log logger = LogFactory.getLog(SampleTomcatApplication.class);
 
 	@Bean
