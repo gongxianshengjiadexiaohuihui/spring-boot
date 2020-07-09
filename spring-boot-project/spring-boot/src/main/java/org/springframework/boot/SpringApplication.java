@@ -329,6 +329,10 @@ public class SpringApplication {
 			ConfigurableEnvironment environment = prepareEnvironment(listeners, applicationArguments);
 			configureIgnoreBeanInfo(environment);
 			Banner printedBanner = printBanner(environment);
+			/**
+			 * 根据webApplicationType创建对应的上下文环境
+			 *  servlet web程序应该返回 org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext
+			 */
 			context = createApplicationContext();
 			exceptionReporters = getSpringFactoriesInstances(SpringBootExceptionReporter.class,
 					new Class[] { ConfigurableApplicationContext.class }, context);
@@ -336,6 +340,9 @@ public class SpringApplication {
 			 * 这个地方完成启动主类的注入
 			 */
 			prepareContext(context, environment, listeners, applicationArguments, printedBanner);
+			/**
+			 * 真正的自动装配
+			 */
 			refreshContext(context);
 			afterRefresh(context, applicationArguments);
 			stopWatch.stop();
