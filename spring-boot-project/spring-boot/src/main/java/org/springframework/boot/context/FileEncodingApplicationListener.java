@@ -41,6 +41,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
  * consider setting the {@code LANG} environment variable to an explicit
  * character-encoding value (e.g. "en_GB.UTF-8").
  *
+ * 如果设定的字符集和系统的字符集不匹配就会停止启动并扔出异常
  * @author Dave Syer
  * @author Madhura Bhave
  * @since 1.0.0
