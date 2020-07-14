@@ -34,7 +34,13 @@ import org.springframework.core.ResolvableType;
  * {@link ApplicationEnvironmentPreparedEvent environment prepared events} and to
  * {@link ApplicationFailedEvent failed events} by logging the classpath of the thread
  * context class loader (TCCL) at {@code DEBUG} level.
+ * * 在环境准备完成事件ApplicationEnvironmentPreparedEvent或者应用失败事件ApplicationFailedEvent
+ *  发生时，DEBUG级别日志输出线程上下文类加载器的classpath。
  *
+ *  线程上下文类加载器:TCCL,thread context class loader
+ *
+ *  该类定义为GenericApplicationListener的原因是它要响应多种事件类型：
+ *   ApplicationEnvironmentPreparedEvent类型和ApplicationFailedEvent类型
  * @author Andy Wilkinson
  * @since 2.0.0
  */

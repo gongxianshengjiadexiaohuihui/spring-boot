@@ -79,7 +79,8 @@ import org.springframework.util.StringUtils;
  * <li>{@code PID} is set to the value of the current process ID if it can be determined.
  * </li>
  * </ul>
- *
+ *  配置日志系统，如果环境已经有了日志配置就会用该配置，否则会用一个默认的配置，如果环境有了日志级别和日志分组就会使用该配置
+ *  可以通过命令行开启debug或者trace，如果想要忽略可以通过setParseArgs设置忽略，默认只打印console，支持log4jhe logback
  * @author Dave Syer
  * @author Phillip Webb
  * @author Andy Wilkinson

@@ -28,7 +28,7 @@ import org.springframework.util.ClassUtils;
 /**
  * {@link ApplicationListener} that replaces the liquibase {@link ServiceLocator} with a
  * version that works with Spring Boot executable archives.
- *
+ * Liquibase是一个用于数据库重构和迁移的开源工具，通过日志文件的形式记录数据库的变更，然后执行日志文件中的修改，将数据库更新或回滚到一致的状态。它的目标是提供一种数据库类型无关的解决方案，通过执行schema类型的文件来达到迁移。
  * @author Phillip Webb
  * @author Dave Syer
  * @since 1.0.0
