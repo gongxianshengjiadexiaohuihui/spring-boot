@@ -160,18 +160,38 @@ public class ConfigFileApplicationListener implements EnvironmentPostProcessor, 
 				|| ApplicationPreparedEvent.class.isAssignableFrom(eventType);
 	}
 
+	/**
+	 * 监听两个事件
+	 * 应用准备事件
+	 * 应用环境准备事件
+	 * @param event
+	 */
 	@Override
 	public void onApplicationEvent(ApplicationEvent event) {
 		if (event instanceof ApplicationEnvironmentPreparedEvent) {
 			onApplicationEnvironmentPreparedEvent((ApplicationEnvironmentPreparedEvent) event);
 		}
 		if (event instanceof ApplicationPreparedEvent) {
+			/**
+			 * 创建了一个配置资源后置处理器
+			 */
 			onApplicationPreparedEvent(event);
 		}
 	}
 
 	private void onApplicationEnvironmentPreparedEvent(ApplicationEnvironmentPreparedEvent event) {
+		/**
+		 * 加载环境后置处理器
+		 *
+		 * org.springframework.boot.cloud.CloudFoundryVcapEnvironmentPostProcessor 解析cloud配置的源数据(json格式)成key-value格式的简单数据
+		 * org.springframework.boot.env.SpringApplicationJsonEnvironmentPostProcessor 解析环境中spring.application.json或SPRING_APPLICATION_JSON对应的json串，这个优先级比系统配置文件的优先级高
+		 * org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor将propertySourceList中名为systemEnvironment的SystemEnvironmentPropertySource对象替换成OriginAwareSystemEnvironmentPropertySource对象，source未变，还是SystemEnvironmentPropertySource对象的source；OriginAwareSystemEnvironmentPropertySource是SystemEnvironmentPropertySourceEnvironmentPostProcessor的静态内部类，且继承自SystemEnvironmentPropertySource。具体这么替换出于什么目的，便于原点查找？暂时还未知。
+		 */
 		List<EnvironmentPostProcessor> postProcessors = loadPostProcessors();
+		/**
+		 * 自身也实现了EnvironmentPostProcessor接口，也是作为环境后置处理器
+		 * 主要加入了随机数处理，并通过profiles 和spring.config.location和spring.config.name所决定的配置文件
+		 */
 		postProcessors.add(this);
 		AnnotationAwareOrderComparator.sort(postProcessors);
 		for (EnvironmentPostProcessor postProcessor : postProcessors) {
