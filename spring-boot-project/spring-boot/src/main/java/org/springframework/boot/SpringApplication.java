@@ -370,7 +370,13 @@ public class SpringApplication {
 	private ConfigurableEnvironment prepareEnvironment(SpringApplicationRunListeners listeners,
 			ApplicationArguments applicationArguments) {
 		// Create and configure the environment
-		ConfigurableEnvironment environment = getOrCreateEnvironment();
+		/**
+		 * 创建基础Servlet环境--会加载一些基础的配置文件，jvm环境的参数，系统的参数，等等
+		 */
+		ConfigurableEnvironment environment =  getOrCreateEnvironment();
+		/**
+		 * 进一步配置配置文件和profile在更细的力度，比如加入args中的配置项
+		 */
 		configureEnvironment(environment, applicationArguments.getSourceArgs());
 		ConfigurationPropertySources.attach(environment);
 		listeners.environmentPrepared(environment);
@@ -503,6 +509,9 @@ public class SpringApplication {
 	 */
 	protected void configureEnvironment(ConfigurableEnvironment environment, String[] args) {
 		if (this.addConversionService) {
+			/**
+			 * 实例化一个格式转换工具对象--doublecheck
+			 */
 			ConversionService conversionService = ApplicationConversionService.getSharedInstance();
 			environment.setConversionService((ConfigurableConversionService) conversionService);
 		}
@@ -522,6 +531,9 @@ public class SpringApplication {
 		if (this.defaultProperties != null && !this.defaultProperties.isEmpty()) {
 			sources.addLast(new MapPropertySource("defaultProperties", this.defaultProperties));
 		}
+		/**
+		 * 如果args不为空，就解析并放入propertySource中
+		 */
 		if (this.addCommandLineProperties && args.length > 0) {
 			String name = CommandLinePropertySource.COMMAND_LINE_PROPERTY_SOURCE_NAME;
 			if (sources.contains(name)) {

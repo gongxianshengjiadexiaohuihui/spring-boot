@@ -48,7 +48,8 @@ public class SampleTomcatApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(SampleTomcatApplication.class, args);
+		SpringApplication application = new SpringApplication(SampleTomcatApplication.class);
+		application.run(args);
 	}
 
 }

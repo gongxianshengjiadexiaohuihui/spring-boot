@@ -42,12 +42,12 @@ public class AnsiPropertySource extends PropertySource<AnsiElement> {
 
 	static {
 		List<MappedEnum<?>> enums = new ArrayList<>();
-		enums.add(new MappedEnum<>("AnsiStyle.", AnsiStyle.class));
-		enums.add(new MappedEnum<>("AnsiColor.", AnsiColor.class));
-		enums.add(new MappedEnum<>("AnsiBackground.", AnsiBackground.class));
-		enums.add(new MappedEnum<>("Ansi.", AnsiStyle.class));
-		enums.add(new MappedEnum<>("Ansi.", AnsiColor.class));
-		enums.add(new MappedEnum<>("Ansi.BG_", AnsiBackground.class));
+		enums.add(new MappedEnum("AnsiStyle.", AnsiStyle.class));
+		enums.add(new MappedEnum("AnsiColor.", AnsiColor.class));
+		enums.add(new MappedEnum("AnsiBackground.", AnsiBackground.class));
+		enums.add(new MappedEnum("Ansi.", AnsiStyle.class));
+		enums.add(new MappedEnum("Ansi.", AnsiColor.class));
+		enums.add(new MappedEnum("Ansi.BG_", AnsiBackground.class));
 		MAPPED_ENUMS = Collections.unmodifiableList(enums);
 	}
 

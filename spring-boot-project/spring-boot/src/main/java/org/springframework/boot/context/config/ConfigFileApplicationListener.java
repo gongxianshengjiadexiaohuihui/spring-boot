@@ -186,6 +186,7 @@ public class ConfigFileApplicationListener implements EnvironmentPostProcessor, 
 		 * org.springframework.boot.cloud.CloudFoundryVcapEnvironmentPostProcessor 解析cloud配置的源数据(json格式)成key-value格式的简单数据
 		 * org.springframework.boot.env.SpringApplicationJsonEnvironmentPostProcessor 解析环境中spring.application.json或SPRING_APPLICATION_JSON对应的json串，这个优先级比系统配置文件的优先级高
 		 * org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor将propertySourceList中名为systemEnvironment的SystemEnvironmentPropertySource对象替换成OriginAwareSystemEnvironmentPropertySource对象，source未变，还是SystemEnvironmentPropertySource对象的source；OriginAwareSystemEnvironmentPropertySource是SystemEnvironmentPropertySourceEnvironmentPostProcessor的静态内部类，且继承自SystemEnvironmentPropertySource。具体这么替换出于什么目的，便于原点查找？暂时还未知。
+		 * this  真正的解析配置文件
 		 */
 		List<EnvironmentPostProcessor> postProcessors = loadPostProcessors();
 		/**
@@ -325,15 +326,31 @@ public class ConfigFileApplicationListener implements EnvironmentPostProcessor, 
 			this.environment = environment;
 			this.placeholdersResolver = new PropertySourcesPlaceholdersResolver(this.environment);
 			this.resourceLoader = (resourceLoader != null) ? resourceLoader : new DefaultResourceLoader();
+			/**
+			 * org.springframework.boot.env.PropertiesPropertySourceLoader
+			 * org.springframework.boot.env.YamlPropertySourceLoader
+			 */
 			this.propertySourceLoaders = SpringFactoriesLoader.loadFactories(PropertySourceLoader.class,
 					getClass().getClassLoader());
 		}
 
 		public void load() {
+			/**
+			 * 未处理的集合
+			 */
 			this.profiles = new LinkedList<>();
+			/**
+			 * 已经处理的集合
+			 */
 			this.processedProfiles = new LinkedList<>();
 			this.activatedProfiles = false;
+			/**
+			 * 已经加载的配置文件集合
+			 */
 			this.loaded = new LinkedHashMap<>();
+			/**
+			 * 加载所有的profile包括默认的profile null
+			 */
 			initializeProfiles();
 			while (!this.profiles.isEmpty()) {
 				Profile profile = this.profiles.poll();
@@ -459,6 +476,11 @@ public class ConfigFileApplicationListener implements EnvironmentPostProcessor, 
 				}
 			}
 			Set<String> processed = new HashSet<>();
+			/**
+			 * 通过后缀解析对应配置文件
+			 * "properties", "xml"
+			 * "yml", "yaml"
+			 */
 			for (PropertySourceLoader loader : this.propertySourceLoaders) {
 				for (String fileExtension : loader.getFileExtensions()) {
 					if (processed.add(fileExtension)) {
@@ -556,6 +578,9 @@ public class ConfigFileApplicationListener implements EnvironmentPostProcessor, 
 			this.profiles.addAll(existingProfiles);
 		}
 
+		/**
+		 * 实际的加载配置文件动作，调用ResourceLoader的load动作
+		 */
 		private List<Document> loadDocuments(PropertySourceLoader loader, String name, Resource resource)
 				throws IOException {
 			DocumentsCacheKey cacheKey = new DocumentsCacheKey(loader, resource);
@@ -624,10 +649,19 @@ public class ConfigFileApplicationListener implements EnvironmentPostProcessor, 
 		}
 
 		private Set<String> getSearchLocations() {
+			/**
+			 * 先判断有没有spring.config.location--注意这是在加载配置文件之前，所以只能卸载args里
+			 */
 			if (this.environment.containsProperty(CONFIG_LOCATION_PROPERTY)) {
 				return getSearchLocations(CONFIG_LOCATION_PROPERTY);
 			}
+			/**
+			 * 获取spring.config.additional-location
+			 */
 			Set<String> locations = getSearchLocations(CONFIG_ADDITIONAL_LOCATION_PROPERTY);
+			/**
+			 * 获取默认配置classpath:/,classpath:/config/,file:./,file:./config/
+			 */
 			locations.addAll(
 					asResolvedSet(ConfigFileApplicationListener.this.searchLocations, DEFAULT_SEARCH_LOCATIONS));
 			return locations;
@@ -652,10 +686,16 @@ public class ConfigFileApplicationListener implements EnvironmentPostProcessor, 
 		}
 
 		private Set<String> getSearchNames() {
+			/**
+			 * 判断有没有设置文件名spring.config.name
+			 */
 			if (this.environment.containsProperty(CONFIG_NAME_PROPERTY)) {
 				String property = this.environment.getProperty(CONFIG_NAME_PROPERTY);
 				return asResolvedSet(property, null);
 			}
+			/**
+			 * 放入默认配置文件名前缀application
+			 */
 			return asResolvedSet(ConfigFileApplicationListener.this.names, DEFAULT_NAMES);
 		}
 
@@ -679,7 +719,7 @@ public class ConfigFileApplicationListener implements EnvironmentPostProcessor, 
 		}
 
 		private void addLoadedPropertySources() {
-			MutablePropertySources destination = this.environment.getPropertySources();
+ 			MutablePropertySources destination = this.environment.getPropertySources();
 			List<MutablePropertySources> loaded = new ArrayList<>(this.loaded.values());
 			Collections.reverse(loaded);
 			String lastAdded = null;

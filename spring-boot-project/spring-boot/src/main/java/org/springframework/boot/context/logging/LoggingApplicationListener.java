@@ -256,14 +256,29 @@ public class LoggingApplicationListener implements GenericApplicationListener {
 	 * @param classLoader the classloader
 	 */
 	protected void initialize(ConfigurableEnvironment environment, ClassLoader classLoader) {
+		/**
+		 * 将日志系统和环境绑定
+		 */
 		new LoggingSystemProperties(environment).apply();
 		this.logFile = LogFile.get(environment);
 		if (this.logFile != null) {
 			this.logFile.applyToSystemProperties();
 		}
+		/**
+		 * 初始化environment的日志级别
+		 */
 		initializeEarlyLoggingLevel(environment);
+		/**
+		 * 初始化environment的日志系统
+		 */
 		initializeSystem(environment, this.loggingSystem, this.logFile);
+		/**
+		 * 初始化最终的日志级别
+		 */
 		initializeFinalLoggingLevels(environment, this.loggingSystem);
+		/**
+		 * 注册environment的关闭钩子
+		 */
 		registerShutdownHookIfNecessary(environment, this.loggingSystem);
 	}
 
