@@ -378,9 +378,21 @@ public class SpringApplication {
 		 * 进一步配置配置文件和profile在更细的力度，比如加入args中的配置项
 		 */
 		configureEnvironment(environment, applicationArguments.getSourceArgs());
+		/**
+		 * 在配置资源中加入configurationProperties
+		 */
 		ConfigurationPropertySources.attach(environment);
+		/**
+		 * 解析配置文件
+		 */
 		listeners.environmentPrepared(environment);
+		/**
+		 * 将environment与SpringApplication绑定
+		 */
 		bindToSpringApplication(environment);
+		/**
+		 * 如果是定制化environment，做个转化
+		 */
 		if (!this.isCustomEnvironment) {
 			environment = new EnvironmentConverter(getClassLoader()).convertEnvironmentIfNecessary(environment,
 					deduceEnvironmentClass());
