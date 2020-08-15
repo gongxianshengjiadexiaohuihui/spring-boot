@@ -327,7 +327,16 @@ public class SpringApplication {
 			 * 准备环境，整理配置资源（解析配置文件就在这一步)。初始化一些常用的工具类，比如Conver
 			 */
 			ConfigurableEnvironment environment = prepareEnvironment(listeners, applicationArguments);
+			/**
+			 * https://docs.spring.io/spring/docs/5.0.0.RC3/javadoc-api/org/springframework/beans/CachedIntrospectionResults.html
+			 * 值为“true”表示跳过对BeanInfo类的搜索（通常用于首先没有为应用程序中的bean定义此类的情况）。
+			 * 考虑到所有BeanInfo元数据类，默认值为“false”，例如标准的Introspector.getBeanInfo（Class）调用。
+			 * 如果遇到对不存在的BeanInfo类重复的ClassLoader访问，请考虑将此标志切换为“true”，以防此类访问在启动或延迟加载时很昂贵。
+			 */
 			configureIgnoreBeanInfo(environment);
+			/**
+			 * 打印banner
+			 */
 			Banner printedBanner = printBanner(environment);
 			/**
 			 * 根据webApplicationType创建对应的上下文环境
